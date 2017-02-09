@@ -1,0 +1,70 @@
+<HTML>
+<HEAD>
+<TITLE>
+	Netkey Creator Utility File
+</TITLE>
+
+<SCRIPT LANGUAGE="JAVASCRIPT" SRC="scripts/common.js"></SCRIPT>
+<SCRIPT LANGUAGE="JAVASCRIPT" SRC="scripts/printer.js"></SCRIPT>
+<SCRIPT LANGUAGE="JAVASCRIPT" SRC="scripts/cardreader.js"></SCRIPT>
+<SCRIPT LANGUAGE="JAVASCRIPT" SRC="scripts/webprint.js"></SCRIPT>
+<SCRIPT LANGUAGE="JAVASCRIPT" SRC="scripts/promotion.js"></SCRIPT>
+<SCRIPT LANGUAGE="JAVASCRIPT" SRC="scripts/errorcontrol.js"></SCRIPT>
+
+<!-- New Scripts -->
+<SCRIPT LANGUAGE="JAVASCRIPT" SRC="scripts/utilityCardReader.js"></SCRIPT>
+<SCRIPT LANGUAGE="JAVASCRIPT" SRC="scripts/utilityPrinter.js"></SCRIPT>
+<SCRIPT LANGUAGE="JAVASCRIPT" SRC="scripts/utilityFile.js"></SCRIPT>
+<SCRIPT LANGUAGE="JAVASCRIPT" SRC="scripts/KioWare.js"></SCRIPT>
+<!-- New Scripts -->
+</HEAD>
+
+
+<BODY onLoad="Initialize()">
+
+Netkey Creator Utility File
+
+<!-- APPLET PARA EL LECTOR DE TARJETA -->
+
+<!-- APPLET PARA LA IMPRESORA -->
+
+<br>
+Pruebas
+<br>
+<hr>
+<input type="button" value="Probar Sonido" onClick="document.reader.startSound();">
+<hr>
+<input type="button" value="Detener Sonido" onClick="document.reader.stopSound();">
+<hr>
+<input type="button" value="Identificador de Kiosco" onClick="alert(getKioskId());">
+<hr>
+<input type="button" value="Imprimir prueba de papel" onClick="printTest();">
+<hr>
+<input type="button" value="Tiene papel" onClick="alert( (getPaperStatus() == PAPERSTATUS_NORMAL || getPaperStatus() == PAPERSTATUS_NEAREND) ? 'SI' : 'NO' );">
+<hr>
+<input type="button" value="Numero de Status" onClick="alert( getPaperStatus() );">
+<hr>
+<input type="button" value="Problemas para detectar papel" onClick="alert( ( getPaperStatus() == PAPERSENSOR_ERROR) ? 'SI':'NO' );">
+<hr>
+<input type="button" value="Mostrar Dialogo" onClick="document.reader.showDialog('BOLDIALOG'); setTimeout('document.reader.hideDialog(\'BOLDIALOG\')',500);">
+<hr>
+
+<!-- Componente para la impresion de paginas web   -->
+<OBJECT name="printerOcx" id="printerOcx" style="LEFT: 0px; WIDTH: 100px; TOP: 0px; HEIGHT: 43px" height=43
+	width=167 classid="clsid:2DB0E349-9E6E-44AE-8FC9-D3199166580E">
+	<SPAN STYLE="color:red">ActiveX</SPAN>
+</OBJECT>
+<!-- Flash para el sonido de entrada | sound.Play() -->
+<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" name="sound" width="490" height="59" align="middle" id="sound">
+	<param name="movie" value="flash/sound.swf">
+	<param name="BGCOLOR" value="#CCCCCC">
+</object>
+
+
+<!-- Botones BACOnline -->
+<!-- Botones Menu -->
+<!-- Botones Salir -->
+<!-- Botones Imprimir -->
+<!-- Eventos principales -->
+</BODY>
+</HTML>
