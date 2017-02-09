@@ -1,0 +1,112 @@
+/* CSS Document For Default Screens */
+
+#screens, #outOfService, #noTransferAccounts, #noProducts, #noAccounts, #noPaper,
+#noCreditCards, #badLastStatement, #repeatedPayment, #repeatedTransfer, #securityLevel,
+#tooMany, #logoff, #loginError, #inactive, #expired, #blocked, #badLoginSEC, #badLogin,
+#badCOMBalance, #toBackground, #noClients, #noAvailable, #invalidCard, #clear, #menu{
+  margin: 0px;
+	padding: 0px;
+	background-color: #CCCCCC;
+  background-repeat: no-repeat;
+	background-position: 0px 0px;
+}
+
+#outOfService{
+	background-image: url(../img/outofservice_background.jpg);
+}
+
+#noTransferAccounts{
+	background-image: url(../img/notransferAccounts_background.jpg);
+}
+
+#noProducts{
+	background-image: url(../img/noproducts_background.jpg);
+}
+
+#noAccounts{
+	background-image: url(../img/noaccounts_background.jpg);
+}
+
+#noPaper{
+	background-image: url(../img/nopaper_background.jpg);
+}
+
+#noCreditCards{
+  background-image: url(../img/nocards_background.jpg);
+}
+
+#badLastStatement{
+  background-image: url(../img/badlaststatement_background.jpg);
+}
+
+#repeatedPayment{
+  background-image: url(../img/repeatedpayment_background.jpg);
+}
+
+#repeatedTransfer{
+  background-image: url(../img/repeatedtransfer_background.jpg);
+}
+
+#securityLevel{
+  background-image: url(../img/securitylevel_background.jpg);
+}
+
+#tooMany{
+  background-image: url(../img/toomany_background.jpg);
+}
+
+#logoff{
+  background-image: url(../img/logoff_background.jpg);
+}
+
+#loginError{
+  background-image: url(../img/loginerror_background.jpg);
+}
+
+#inactive{
+  background-image: url(../img/inactive_background.jpg);
+}
+
+#expired{
+  background-image: url(../img/expired_background.jpg);
+}
+
+#blocked{
+  background-image: url(../img/blocked_background.jpg);
+}
+
+#badLoginSEC{
+  background-image: url(../img/badloginSEC_background.jpg);
+}
+
+#badLogin{
+  background-image: url(../img/badlogin_background.jpg);
+}
+
+#badCOMBalance{
+  background-image: url(../img/badcombalance_background.jpg);
+}
+
+#toBackground{
+  background-image: url(../img/to_background.jpg);
+}
+
+#noClients{
+  background-image: url(../img/noclients_background.jpg);
+}
+
+#noAvailable{
+  background-image: url(../img/navailable_background.jpg);
+}
+
+#invalidCard{
+  background-image: url(../img/invalidcard_background.jpg);
+}
+
+#clear{
+  background-image: url(../img/clear_background.jpg);
+}
+
+#menu{
+  background-image: url(../img/menu_background.jpg);    
+}

@@ -1,0 +1,143 @@
+/* CSS Document */
+
+.sucinput {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 20px;
+	font-weight: bold;
+	color: #FFFFFF;
+	background-color: #666666;
+}
+.sucinput_over {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 20px;
+	font-weight: bold;
+	color: #FFFFFF;
+	background-color: #666666;
+	border: medium solid #FF0000;
+
+}
+.body {
+	margin: 0px;
+	padding: 0px;
+	background-image: url(../img/background.jpg);
+	background-repeat: no-repeat;
+	top: -100px;
+	background-position: 0px -101px;
+}
+
+.clearBody {
+	margin: 0px;
+	padding: 0px;
+	background-image: url(../img/clear_background.jpg);
+	background-repeat: no-repeat;
+	top: 0px;
+	background-position: 0px 0px;
+}
+
+.bodysmall {
+	margin: 0px;
+	padding: 0px;
+	background-image: url(../img/name_bg.jpg);
+	background-repeat: no-repeat;
+	top: 0px;
+	background-position: 0px 0px;
+
+}
+
+.gradientSmallBody {
+
+	margin: 0px;
+	padding: 0px;
+	background-image: url(../img/headGradient.gif);
+	background-repeat: repeat-x;
+	top: 0px;
+	background-position: 0px 0px;
+}
+
+h1 {
+	font-family: "TheSans BAC", Verdana, sans-serif;
+	font-size: 45px;
+	color: #990000;
+	font-weight: bold;
+
+}
+.biginput {
+	height: 40px;
+	width: 200px;
+}
+.messageFont {
+	font-family: "TheSans BAC", Arial, Verdana, Helvetica, sans-serif;
+	font-size: 48px;
+	font-weight: bold;
+	color: #666666;
+}
+.messageFontBlack {
+	font-family: "TheSans BAC", Arial, Verdana, Helvetica, sans-serif;
+	font-size: 48px;
+	font-weight: bold;
+	color: #000000;
+}
+.messageFontSmall {
+	font-family: "TheSans BAC", Arial, Verdana, Helvetica, sans-serif;
+	font-size: 20px;
+	font-weight: bold;
+	color: #000000;
+}
+.smf {
+	font-family: "TheSans BAC", Arial, Verdana, Helvetica, sans-serif;
+	font-size: 36px;
+	font-weight: bold;
+	color: #666666;
+}
+.error {
+	font-family: "TheSans BAC", Verdana, sans-serif;
+	font-size: 24px;
+	color: #006600;
+	font-weight: bold;
+}
+.nlay3{
+	position:absolute;
+	left:0;
+	top:0;
+	width:100%;
+	height:100%;
+	z-index:1;
+	visibility: visible;
+
+}
+.nlay2{
+	position:absolute;
+	left:0;
+	top:0;
+	width:100%;
+	height:100%;
+	z-index:2;
+	visibility: hidden;
+
+
+}
+.nlay1{
+	position:absolute;
+	left:0;
+	top:0;
+	width:100%;
+	height:100%;
+	z-index:3;
+	visibility: hidden;
+
+}
+.messageFontBlack2 {
+
+	font-family: "TheSans BAC", Arial, Verdana, Helvetica, sans-serif;
+	font-size: 34px;
+	font-weight: bold;
+	color: #000000;
+}
+.exchangeRateSection{
+	margin-top:13px;
+	margin-left:470px;
+	margin-right:75px;
+	position:absolute;
+	background-color: transparent;
+
+}
