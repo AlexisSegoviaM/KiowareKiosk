@@ -1,0 +1,263 @@
+/* CSS Document */
+
+.sucinput {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 20px;
+	font-weight: bold;
+	color: #FFFFFF;
+	background-color: #666666;
+}
+.sucinput_over {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 20px;
+	font-weight: bold;
+	color: #FFFFFF;
+	background-color: #666666;
+	border: medium solid #FF0000;
+
+}
+.body {
+	margin: 0px;
+	padding: 0px;
+	background-image: url(../img/background.jpg);
+	background-repeat: no-repeat;
+	top: -100px;
+	background-position: 0px 0px;
+	max-width: 1024px;
+  	max-height:768px;
+}
+
+.body1 {
+	margin: 0px;
+	padding: 0px;
+	background-image: url(../img/background.jpg);
+	background-repeat: no-repeat;
+	background-position: 0px -101px;
+	max-width: 1024px;
+  	max-height:768px;
+    width:1024px;
+}
+.clearBody {
+	margin: 0px;
+	padding: 0px;
+	background-image: url(../img/clear_background.jpg);
+	background-repeat: no-repeat;
+	top: 0px;
+	background-position: 0px 0px;
+}
+
+.bodysmall {
+	margin: 0px;
+	padding: 0px;
+	background-image: url(../img/name_bg.jpg);
+	background-repeat: no-repeat;
+	top: 0px;
+	background-position: 0px 0px;
+
+}
+
+.gradientSmallBody {
+
+	margin: 0px;
+	padding: 0px;
+	background-image: url(../img/headGradient.gif);
+	background-repeat: repeat-x;
+	top: 0px;
+	background-position: 0px 0px;
+}
+
+h1 {
+	font-family: "TheSans BAC", Verdana, sans-serif;
+	font-size: 45px;
+	color: #990000;
+	font-weight: bold;
+}
+.biginput {
+	height: 40px;
+	width: 200px;
+}
+
+.messageFont {
+	font-family: "TheSans BAC", Arial, Verdana, Helvetica, sans-serif;
+	font-size: 48px;
+	font-weight: bold;
+	color: #666666;
+}
+.messageFontBlack {
+	font-family: "TheSans BAC", Arial, Verdana, Helvetica, sans-serif;
+	font-size: 48px;
+	font-weight: bold;
+	color: #000000;
+}
+.messageFontSmall {
+	font-family: "TheSans BAC", Arial, Verdana, Helvetica, sans-serif;
+	font-size: 20px;
+	font-weight: bold;
+	color: #000000;
+}
+.messageFontSmall_12 {
+	font-family: "TheSans BAC", Arial, Verdana, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	color: #000000;
+}
+.smf {
+	font-family: "TheSans BAC", Arial, Verdana, Helvetica, sans-serif;
+	font-size: 36px;
+	font-weight: bold;
+	color: #666666;
+}
+.error {
+	font-family: "TheSans BAC", Verdana, sans-serif;
+	font-size: 24px;
+	color: #006600;
+	font-weight: bold;
+}
+.nlay0{
+	position:absolute;
+	left:70px;
+	top:0px;
+	z-index:1;
+	visibility: visible;
+    height:650px
+}
+.nlay01{
+	position:absolute;
+	left:300px;
+	top:90px;
+	z-index:1;
+	visibility: visible;
+
+}
+.nlay10{
+	position:absolute;
+	left:634px;
+	top:43px;
+	z-index:1;
+	visibility: visible;
+}
+.nlay11{
+	position:absolute;
+	left:788px;
+	top:43px;
+	z-index:1;
+	visibility: visible;
+}
+.nlay12{
+	position:absolute;
+	left:60px;
+	top:265px;
+	z-index:1;
+	visibility: visible;
+}
+.nlay13{
+	position:absolute;
+	left:10px;
+	top:130px;
+	font-family: "TheSans BAC", Arial, Verdana, Helvetica, sans-serif;
+	font-weight: bold;
+	color: #000000;
+	z-index:1;
+	visibility: visible;
+}
+.nlay14{
+    text-align:center;
+	min-width: 1024px;
+}
+.nlay3{
+	position:absolute;
+	left:0;
+	top:0;
+	width:100%;
+	height:100%;
+	z-index:1;
+	visibility: visible;
+}
+.nlay2{
+	position:absolute;
+	left:0;
+	top:0;
+	width:100%;
+	height:100%;
+	z-index:2;
+	visibility: hidden;
+}
+.nlay1{
+	position:absolute;
+	left:0;
+	top:0;
+	width:100%;
+	height:100%;
+	z-index:3;
+	visibility: hidden;
+
+}
+.messageFontBlack2 {
+
+	font-family: "TheSans BAC", Arial, Verdana, Helvetica, sans-serif;
+	font-size: 34px;
+	font-weight: bold;
+	color: #000000;
+}
+.exchangeRateSection{
+	margin-top:13px;
+	margin-left:470px;
+	margin-right:75px;
+	position:absolute;
+	background-color: transparent;
+	
+}
+.iframeBody {
+    position:fixed;
+	margin: 0px;
+	padding: 0px;
+    left:0px;
+	top:0px;
+	background-image: url(../img/iframes_background.jpg);
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	width: 990px;
+  	height:768px;
+}
+.iframeDiv {
+    position:absolute;
+	margin: 0px;
+	padding: 0px;
+    left:0px;
+	top:43px;
+    width: 990px;
+  	height:567px;
+}
+.nlayIF1{
+	position:absolute;
+    margin: 0px;
+	padding: 0px;
+	left:0px;
+	top:0px;
+	z-index:1;
+	visibility: visible;
+    height:41px;
+}
+.nlayIF2{
+	position:absolute;
+    margin: 0px;
+	padding: 0px;
+	left:150px;
+	top:635px;
+	z-index:1;
+	visibility: visible;
+    height:41px;
+    width:875px
+}
+.nlayIF3{
+	position:absolute;
+    margin: 0px;
+	padding: 0px;
+	left:985px;
+	top:100px;
+	z-index:1;
+	visibility: visible;
+    height:610px;
+    width:34px
+}
+

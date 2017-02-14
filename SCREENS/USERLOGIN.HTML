@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="iso-8859-1">
+    <link href="kiosk.css" rel="stylesheet">
+    <script src="../scripts/screenutils.js"></script>
+    <script src="../scripts/validation.js"></script>
+    <script src="../scripts/utilityFile.js"></script>
+    <script src="../scripts/kioware.js"></script>
+    <script language="JavaScript">
+	var submitUsed = false;
+	var dataSent = false;
+	// Inicializacion
+	function init() {
+	    //document.loginForm.country.value = getCountry();
+	    // Elimina la informacion de usuario
+	    sessionStorage.removeItem('Usuario');
+
+	    // Obtiene la información almacenada desde sessionStorage
+	    document.loginForm.country.value = sessionStorage.getItem('kioskCountry');
+	    document.loginForm.kioskId.value = sessionStorage.getItem('kioskId');
+		document.loginForm.action = getFormAction();
+		document.loginForm.user.focus();
+	    //var country = getCountry();
+        // Repite la informacion del pais
+		var country = sessionStorage.getItem('kioskCountry');
+		if (country.length>0){
+			var exchangeRateDiv= document.getElementById("exchangeRateDiv");
+			flashHTML="<object type='application/x-shockwave-flash' data='../flash/exchangeRateK.swf?UICountry="+country+"' width='520' height='50'>	<param name='movie' value='../flash/exchangeRateK.swf?UICountry="+country+"' /><param name='bgcolor' value='#c9c9c9' /><param name='quality' value='high' /></object>";			
+			exchangeRateDiv.innerHTML= flashHTML;
+		}
+	}
+		function userOnBlur(){
+			document.loginForm.user.className='sucinput';
+			document.loginForm.password.focus();
+		}
+		function userOnFocus(){
+			document.loginForm.user.className='sucinput_over';
+			submitUsed = true;
+
+		}
+		function passwordOnBlur(){
+
+			document.loginForm.password.className='sucinput';
+			document.loginForm.user.focus();
+		}
+		function passwordOnFocus(){
+			document.loginForm.password.className='sucinput_over';
+			submitUsed = true;
+		}
+		function validate(){
+		    submitUsed = true;
+		    // Elimina el usuario del Kiosko en sessionStorage
+		    sessionStorage.removeItem('Usuario');
+
+			if (!dataSent){
+				setError(" ");
+				frm = document.loginForm;
+				if (!validateTextField(frm.user.value)){
+					frm.user.value = "";
+					setError("Digite su usuario en minúscula");
+					frm.user.focus();
+					return false;
+				}
+				if (frm.user.value.length < 3){
+					setError("Digite 3 caracteres mínimo en el campo usuario");
+					frm.user.focus();
+					return false;
+				}
+				var checkOK = "abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZÑ" + "0123456789";
+				var checkStr = frm.user.value;
+				var allValid = true;
+				for (i = 0; i < checkStr.length; i++) {
+					ch = checkStr.charAt(i);
+					for (j = 0; j < checkOK.length; j++)
+					  if (ch == checkOK.charAt(j))
+						break;
+					if (j == checkOK.length) {
+					  allValid = false;
+					  break;
+					}
+				}
+				if (!allValid) {
+					setError("El usuario tiene caracteres inválidos");
+					frm.user.focus();
+					return false;
+				}
+				if (containsUpperCase(checkStr)) {
+					setError("El usuario debe indicarse en minúscula");
+					//frm.user.value = "";
+					frm.user.focus();
+					return false;
+				}
+				var checkNum = "0123456789";
+				if (checkNum.indexOf(checkStr.charAt(0)) != -1){
+					setError("El campo usuario tiene formato incorrecto");
+					//frm.user.value = "";
+					frm.user.focus();
+					frm.user.select();
+					return (false);
+				}
+				if (!validateTextField(frm.password.value)){
+					frm.password.value = "";
+					setError("Digite su contraseña");
+					frm.password.focus();
+					return false;
+				}
+				if (frm.password.value.length < 6){
+					setError("La contraseña debe tener mínimo 6 y máximo 16 caracteres");
+					frm.password.value = "";
+					frm.password.focus();
+					frm.password.select();
+					return false;
+				}
+                // Almacena el usuario conectado y validado
+				sessionStorage.setItem('Usuario', frm.user.value);
+				datasent = true;
+				alert("Usuario : " + frm.user.value);	
+				getUtility().setCredential(frm.user.value);
+				getUtility().setLoginType("SEC_LOGIN");
+				//document.loginForm.kioskId.value = getUtility().printer.getKioskId();
+				alert("return true");				
+				return true;
+			}
+			return true;
+		}
+
+</script>
+</HEAD>
+<BODY bgcolor="#CCCCCC" class="body" onload="Initialize();init()">
+    <form name="loginForm" method="POST" action="" onSubmit="return validate();">
+        <input name="loginType" type="hidden" id="loginType" value="SEC">
+        <input name="country" type="hidden" id="country" value="CR">
+        <input name="kioskId" type="hidden" value="">
+    </form>
+    <div id="exchangeRateDiv" class="exchangeRateSection">
+    </div>
+    <div>
+        <table border="0"  style="margin: 0 auto;">
+            <tr>
+                <td height="46"></td>
+            </tr>
+            <tr>
+                <td height="40" align="center" class="messageFont">
+                    <font color="#990000">
+                        <h1 id="label"><br>Utilice el Teclado</h1>
+                    </font>
+                </td>
+            </tr>
+            <tr>
+                <td height="200" align="center" style="vertical-align:middle">
+                    <div id="Solicitud_Sucursal">
+                        <table class="nlay10" style="width:360px">
+                            <tr>
+                                <td>
+                                    <a href="https://content.baccredomatic.com/es/aplicaciones/kioscos/servicios.html"><img src="../img/SOLICITUDES_EN_LINEA.JPG" width="150" height="48"></a>
+                                </td>
+                                <td>
+                                    <a href="ifsucursal.html">
+                                        <img src="../img/BACONLINE_NORMAL.JPG" width="210" height="48">
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <table border="0" cellpadding="8" cellspacing="0" style="margin: 0 auto;">
+                        <tr style="vertical-align:middle">
+                            <td align="left" valign="top" nowrap class="dc">
+                                <strong>
+                                    <font color="#CF1326" size="5" face="TheSans BAC">
+                                        &gt;
+                                        Usuario
+                                    </font>
+                                </strong>
+                            </td>
+                            <td>
+                                <input name="user" type="text" class="sucinput" tabindex="1" maxlength="50" onBlur="userOnBlur()" onFocus="userOnFocus()" onKeyPress="clearMe(this)">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td height="20" colspan="2">&nbsp;</td>
+                        </tr>
+                        <tr style="vertical-align:middle">
+                            <td align="left" style="vertical-align:bottom" class="dc">
+                                <font color="#CF1326" size="5" face="TheSans BAC">
+                                    <strong>
+                                        &gt;
+                                        Contrase&ntilde;a
+                                    </strong>
+                                </font>
+                            </td>
+                            <td align="right">
+                                <input name="password" type="password" maxlength="16" class="sucinput" tabindex="2" onBlur="passwordOnBlur()" onFocus="passwordOnFocus()" onKeyPress="clearMe(this)">
+                            </td>
+                        </tr>
+                      
+                        <tr style="text-align:center">
+                            <td height="30" colspan="2">&nbsp;</td>
+                        </tr>
+                        <tr align="center">
+                            <td colspan="2"> <input name="buttonsubmit" type="image" id="buttonsubmit" onMouseOut="buttonsubmit_onMouseUp()" onMouseDown="buttonsubmit_onMouseDown()" onMouseUp="buttonsubmit_onMouseUp()" src="../img/ingresarbuttonsmall_normal.jpg"></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td height="70" style="text-align:center">
+                    <h2 id="error" class="error">&nbsp;</h2>
+                </td>
+            </tr>
+            <tr height="38" style="text-align:center">
+                  <td></td>
+              </tr>
+            <tr>
+                <td style="text-align:right" width="1024px">
+                    <a href="login.html"><img src="../img/salirbuttonsmall_normal.jpg" width="145" height="59" border="0"></a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</BODY>
+</HTML>

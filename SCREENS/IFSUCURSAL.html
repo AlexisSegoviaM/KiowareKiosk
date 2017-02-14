@@ -1,0 +1,137 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="iso-8859-1">
+    <link href="kiosk.css" rel="stylesheet">
+    <title>Sucursal Electrónica</title>
+    <script src="../scripts/utilityFile.js"></script>
+    <script src="../scripts/utilityPrinter.js"></script>
+    <script src="../scripts/Printer.js"></script>
+    <script src="../scripts/WebPrint.js"></script>
+    <script src="../scripts/jquery-3.1.1.min.js"></script>
+    
+    <script language="JavaScript">
+        //En las pruebas se debe verificar el paso del scroll
+        var step = 30;
+        function scrollIzquierda(){
+            document.getElementById('div_iframe').scrollLeft += -step;
+        }
+        function scrollDerecha(){
+            document.getElementById('div_iframe').scrollLeft += step;
+        }
+        function btnAtras ()
+        {
+            iframe.contentWindow.history.back();
+        }
+        function btnAdelante() {
+            iframe.contentWindow.history.forward();
+        }
+        function btnDetener() {
+            iframe.document.execCommand('Stop');
+        }
+        function scrollArriba() {
+            document.getElementById('div_iframe').scrollTop += -step;
+        }
+        function scrollAbajo() {
+            document.getElementById('div_iframe').scrollTop += step;
+        }
+    </script>
+    /*El ancho y la altura se deben afinar en las pruebas*/
+    <style>
+        #div_iframe {
+  position:absolute;
+  border-style:hidden;
+  overflow: hidden;
+  height: 570px;
+  width: 99%;
+  top:43px
+}
+        /*El ancho y la altura se deben afinar en las pruebas*/
+#frame {
+  width: 250%;
+  height: 250%;
+}
+    </style>
+</head>
+<body bgcolor="#CCCCCC" class="iframeBody">
+    <div>
+        <table class="nlayIF1">
+            <tr>
+                <td >
+                    <a onclick="btnAtras()" > 
+                        <img src="../img/atras_normal.jpg" width="143" height="41" border="0" name="btAtras" id="btAtras">
+                    </a>
+                <td>
+                    <a onclick="btnAdelante()" >
+                        <img src="../img/adelante_normal.jpg" width="143" height="41" border="0" name="btAdelante" id="btAdelante">
+                    </a>
+                </td>
+                <td>
+                    <a onclick="btnDetener()" >
+                        <img src="../img/detener_normal.jpg" width="143" height="41" border="0" name="btDetener" id="btDetener">
+                    </a>
+                </td>
+                <td>
+                    <a href="ifsucursal.html">
+                        <img src="../img/principal_normal.jpg" width="280" height="41" border="0" name="btIngresar" id="btIngresar">
+                    </a>
+                </td>
+                <td>
+                    <a href="">
+                        <img src="../img/Imprimir_normal.jpg" width="143" height="41" border="0" name="btImprimir" id="btImprimir">
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="div_iframe">
+        <!--href="https://www.sucursalmovil.com/secm/index.go"> class="iframeDiv" para pruebas  1.html --> 
+        <iframe id="frame" src="https://www.sucursalmovil.com/secm/index.go" scrolling="no" frameborder="1" name="frame">
+         </iframe>
+    </div>
+    <div id="nav_lateral" class="nlayIF3">
+        <table >
+            <tr>
+                <td style="height:300px">
+                    <a onclick="scrollArriba()">
+                        <img src="../img/up_normal.jpg" width="34" height="79" border="0" name="btArriba" id="btArriba">
+                    </a>
+                </td>
+            </tr>
+             <tr>
+                 <td>
+                     <a onclick="scrollAbajo()">
+                         <img src="../img/down_normal.jpg" width="34" height="79" border="0" name="btAbajo" id="btAbajo">
+                     </a>
+                 </td>
+             </tr>
+        </table>
+    </div>
+    <div id="nav_abajo" class="nlayIF2">
+        <table >
+        <tr>
+            <td style="width:150px">
+                <a onclick="scrollIzquierda()">
+                   <img src="../img/left_normal.jpg" width="79" height="34" border="0" name="btIzquierda" id="btIzquierda">
+               </a>
+            </td>
+            <td style="width:350px">
+                <img src="../img/baconline_instructions.jpg" width="266" height="23" border="0" name="imgInstructions" id="imgInstructions" />
+            </td>
+            <td style="width:200px">
+                <a onclick="scrollDerecha()">
+                    <img src="../img/right_normal.jpg" width="79" height="34" border="0" name="btDerecha" id="btDerecha">
+                </a>
+            </td>
+            <td style="text-align:right">
+                <a href="login.html"><img src="../img/logoff_normal.jpg" width="145" height="41" border="0"></a>
+            </td>
+        </tr>
+        </table>
+    </div>
+    <div>
+        <!--APPLET PARA LA IMPRESORA-->
+        <script src="../scripts/APPPRINTER.js"></script>
+    </div>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+<META charset="iso-8859-1">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <link href="kiosk.css" rel="stylesheet">
+    <script src="../scripts/screenutils.js"></script>
+    <script src="../scripts/validation.js"></script>
+    <script src="../scripts/KIOWARE.js"></script>
+    <script src="../scripts/UTILITYFILE.js"></script>
+    <script src="../scripts/UTILITYCARDREADER.js"></script>
+<script language="JavaScript">
+    var dataSent = false;
+    var country;
+    function init() {
+
+
+	if (getUtility().getCredential() == ""){
+		if (getUtility().getTemporaryCredential() == ""){
+			window.location.href = "login.html";
+		} else {
+			getUtility().setCredential(getUtility().getTemporaryCredential());
+			getUtility().setTemporaryCredential("");
+		}
+	}
+    // Buscar el pais en el sessionStorage
+	country = sessionStorage.getItem('kioskCountry');
+	document.LoginForm.credential.value = getUtility().getCredential();
+	document.LoginForm.action = getFormAction();
+    //document.LoginForm.country.value = getCountry();
+	document.LoginForm.country.value = country;
+	document.LoginForm.password.focus();
+}
+
+function validate() {
+	if (!dataSent) {
+		setError(" ");
+		if (!validateTextField(document.LoginForm.password.value)) {
+			setError("Digite un número de clave de acceso");
+			document.LoginForm.password.focus();
+			return false;
+		}
+		if (document.LoginForm.password.value.length < 4) {
+			setError("La clave de acceso debe tener 4 dígitos");
+			document.LoginForm.password.focus();
+			return false;
+		}
+		if (!isValidNumber(document.LoginForm.password.value)) {
+			setError("La clave de acceso tiene caracteres inválidos");
+			document.LoginForm.password.focus();
+			return false;
+		}
+		dataSent = true;
+        // Ubicar el Id del kiosko desde sessionStorage
+	    //document.LoginForm.kioskId.value = getUtility().printer.getKioskId();
+		document.LoginForm.kioskId.value = sessionStorage.getItem('kioskId');
+		getUtility().setCredential(document.LoginForm.credential.value);
+		getUtility().setLoginType("CREDIT_CARD_LOGIN");
+		return true;
+	}
+	return false;
+}
+function enlaceLogin()
+{
+    alert("enlaceLogin");
+    window.location.assign('login.html');
+    alert("enlaceLogin1");
+}
+
+</script>
+</HEAD>
+<BODY bgcolor="#CCCCCC" class="body1" onload="Initialize(); init()">
+<table border="0" cellpadding="2" cellspacing="2" class="nlay0">
+  <tr>
+    <td height="80" style="text-align:center;vertical-align:bottom">
+<h1 id="label">Digite la clave de acceso telef&oacute;nico</h1></td>
+  </tr>
+  <tr>
+    <td style="text-align:center;vertical-align:top">
+  <form name="LoginForm"  action="login.do" onSubmit="return validate();" method="POST">
+	<input name="loginType" type="hidden" value="PROD">
+	<input name="country" type="hidden" value="">
+	<input name="credential" type="hidden" value="">
+	<input name="kioskId" type="hidden" value="">
+        <table border="0" style="text-align:center" cellpadding="1" cellspacing="1">
+        <tr class="nlay01">
+          <td >
+			<font color="#CF1326" size="6" face="TheSans BAC, Verdana, sans-serif">
+			<strong>
+			&gt; Clave
+			  </strong>
+			  </font>
+              </td>
+          <td width="30" style="text-align:left;vertical-align:top" class="dc">&nbsp;</td>
+          <td width="30" style="text-align:left;vertical-align:top">
+              <input name="password" type="password" class="sucinput_over" onBlur="document.LoginForm.password.focus();" onChange="checkInput(this)" onKeyUp="checkInput(this)" size="8" maxlength="4">
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3" width="900" ><br />
+	            <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" name="numpad" width="232" height="288" id="numpad">
+                <param name="movie" value="../flash/numpad.swf">
+                <param name="quality" value="high">
+              	</object>
+			</td>
+        </tr>
+        <tr style="text-align:center">
+		  <td colspan="3" style="vertical-align:bottom">
+              <input name="buttonsubmit" type="image" id="buttonsubmit" onMouseOut="buttonsubmit_onMouseUp()" onMouseDown="buttonsubmit_onMouseDown()" onMouseUp="buttonsubmit_onMouseUp()"  src="../img/ingresarbuttonsmall_normal.jpg">
+			</td>
+        </tr>
+        </table>
+      </form>
+      </td>
+  </tr>
+  <tr>
+    <td height="30" style="text-align:center;vertical-align:middle">
+        <h2 id="error" class="error">&nbsp;</h2>
+    </td>
+  </tr>
+  <tr>
+      <td height="60" style="text-align:right;vertical-align:bottom;top:600px">
+          <!--<a href="javascript:myJsFunc();">-->
+          <a href="login.html"><img src="../img/salirbuttonsmall_normal.jpg" width="145" height="59" border="0"></a>
+          <!--<a href='https://www.google.co.ve/' style="text-decoration:none !important;"><button style="background-color:rgb(255,213,32)">  <div> Back </div> </button></a>-->
+</td>
+  </tr>
+</table>
+<script language="JavaScript" event="FSCommand(command, args)" for="numpad">
+		field = document.LoginForm.password;
+		if (args == 'clear'){
+			field.value = '';
+			document.LoginForm.password.focus();
+		}
+		else{
+			if (field.value.length < 4)
+			{
+				field.value = field.value + args;
+			}
+			document.LoginForm.password.focus();
+		}
+</script>
+    <!--APPLET PARA LA LECTORATARJETA-->
+    <script src="../scripts/APPCARDREADER.js"></script>
+</BODY>
+</HTML>

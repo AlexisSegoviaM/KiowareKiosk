@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="iso-8859-1">
+    <link href="kiosk.css" rel="stylesheet">
+    <script src="../scripts/screenutils.js"></script>
+    <script src="../scripts/validation.js"></script>
+    <script src="../scripts/utilityFile.js"></script>
+    <script src="../scripts/kioware.js"></script>
+<script language="JavaScript">
+	var submitUsed = false;
+	var dataSent = false;
+
+	// Inicializacion
+	function init() {
+	    // Eliminar la informacion de la tarjeta
+	    sessionStorage.removeItem('card');
+		document.loginForm.card.focus();
+		//var country = getCountry();
+	    
+
+	    // Obtiene la información almacenada desde sessionStorage
+		var country = sessionStorage.getItem('kioskCountry');
+
+		document.loginForm.country.value = sessionStorage.getItem('kioskCountry');
+		document.loginForm.kioskId.value = sessionStorage.getItem('kioskId');
+		if (country.length>0){
+			var exchangeRateDiv= document.getElementById("exchangeRateDiv");
+			flashHTML="<object type='application/x-shockwave-flash' data='../flash/exchangeRateK.swf?UICountry="+country+"' width='520' height='50'>	<param name='movie' value='../flash/exchangeRateK.swf?UICountry="+country+"' /><param name='bgcolor' value='#c9c9c9' /><param name='quality' value='high' /></object>";			
+			exchangeRateDiv.innerHTML= flashHTML;
+		}
+	}
+
+
+	function validate(){
+	    //document.loginForm.country.value = getCountry();
+	    document.loginForm.country.value = country;
+		document.loginForm.action = getFormAction();
+		submitUsed = true;
+		if (!dataSent){
+			setError(" ");
+			frm = document.loginForm;
+			if (!validateTextField(frm.card.value)){
+					frm.card.value = "";
+					setError("Digite un número de tarjeta o cuenta");
+					frm.card.focus();
+					return false;
+				}
+			if (!isValidNumber(frm.card.value)){
+					setError("El número de tarjeta o cuenta tiene caracteres inválidos");
+					frm.card.focus();
+					return false;
+				}
+			msg = "Ingrese entre 5 y 9 (cuenta bancaria) <br>o entre 14 y 16 (número de tarjeta) dígitos";
+			if (frm.card.value.length < 5){
+					setError(msg);
+					frm.card.focus();
+					return false;
+			}
+			if (frm.card.value.length > 9 && frm.card.value.length < 14){
+					setError(msg);
+					frm.card.focus();
+					return false;
+			}
+			if (!validateTextField(frm.password.value)){
+					setError("Digite un número de clave de acceso");
+					frm.password.focus();
+					return false;
+			}
+			if (frm.password.value.length < 4){
+					setError("La clave de acceso debe tener 4 dígitos");
+					frm.password.focus();
+					return false;
+			}
+			if (!isValidNumber(frm.password.value)){
+					setError("La clave de acceso tiene caracteres inválidos");
+					frm.password.focus();
+					return false;
+			}
+		    // actualizar en el sessionStorage el numero de la tarjeta
+			sessionStorage.setItem('card') = frm.card.value;
+			dataSent = true;
+			getUtility().setCredential(frm.card.value);
+			getUtility().setLoginType("CREDIT_CARD_LOGIN");
+		    // Extraer el Id del Kiosko en sessionStorage
+			document.loginForm.kioskId.value= sessionStorage.getItem('kioskId');
+			//document.loginForm.kioskId.value = getUtility().printer.getKioskId();
+			return true;
+		}
+		return false;
+	}
+	function cardOnBlur(){
+		submitUsed = true;
+		document.loginForm.card.className='sucinput';
+		document.loginForm.password.focus();
+	}
+	function cardOnFocus(){
+		submitUsed = true;
+		document.loginForm.card.className='sucinput_over'
+	}
+	function passwordOnBlur(){
+		submitUsed = true;
+		document.loginForm.password.className='sucinput';
+		document.loginForm.card.focus();
+	}
+	function passwordOnFocus(){
+		submitUsed = true;
+		document.loginForm.password.className='sucinput_over'
+	}
+	function onCardRemoved(){
+		if (!dataSent) {
+			card = getUtility().getReaderCard();
+
+			if (card == null || trim(card).length == 0 || card.length > 16) {
+				// do nothing
+			} else {
+				document.loginForm.card.value = card;
+				document.loginForm.password.focus();
+			}
+		}
+	}
+</script>
+</HEAD>
+<BODY bgcolor="#CCCCCC" class="body" onload="Initialize();init()">
+	<div id="exchangeRateDiv" class="exchangeRateSection">
+	</div>
+<div>
+  <table border="0" cellpadding="0" cellspacing="0" style="margin: 0 auto;">
+  <tr>
+      <td height="49">
+  </tr>
+  <tr>
+      <td height="40" align="center"><font color="#990000">
+        <h1 id="label"><br>Utilice el Teclado</h1>
+        </font>
+	</td>
+  </tr>
+  <tr>
+    <td height="315" align="center">
+		<form name="loginForm" action="" onSubmit="return validate();" method="POST">
+		<input name="loginType" type="hidden" id="loginType" value="PROD">
+		<input name="country" type="hidden" id="country" value="CR">
+		<input name="kioskId" type="hidden" value="">
+        </form>
+<div id="Solicitud_Sucursal" class="nlay10">
+	<table style="width:360px">
+  		<tr >
+      		<td >
+			<a href="https://content.baccredomatic.com/es/aplicaciones/kioscos/servicios.html"><img src="../img/SOLICITUDES_EN_LINEA.JPG" width="150" height="48"></a>
+      		</td>
+		<td >
+			<a href="ifsucursal.html"><img src="../img/BACONLINE_NORMAL.JPG" width="210" height="48"></a>
+      		</td>
+		</tr>
+  	</table>
+</div>
+        <table border="0" align="center" cellpadding="8" cellspacing="0">
+        <tr>
+            <td align="left" style="vertical-align:top" nowrap class="dc"><strong><font color="#CF1326" size="5" face="TheSans BAC">&gt; N&uacute;mero de Tarjeta o Cuenta</font></strong></td>
+            <td align="right" valign="top">
+			<input name="card" type="text" class="sucinput" id="card" onChange="checkInput(this)" onKeyUp="checkInput(this)" maxlength="16" onBlur="cardOnBlur()" onFocus="cardOnFocus()" onKeyDown="clearMe(this)">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+            <td align="left" style="vertical-align:bottom" nowrap class="dc"><font color="#CF1326" size="5" face="TheSans BAC"><strong>&gt; Clave de Acceso Telef&oacute;nico</strong></font></td>
+            <td align="right" style="vertical-align:bottom">
+			<input name="password" type="password" class="sucinput" onChange="checkInput(this)" onKeyUp="checkInput(this)" maxlength="4" onBlur="passwordOnBlur()" onFocus="passwordOnFocus()" onKeyDown="clearMe(this)">
+            </td>
+        </tr>
+        <tr align="center">
+            <td height="0%" colspan="2"></td>
+        </tr>
+        <tr align="center">
+            <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr align="center">
+            <td colspan="2">
+              <input name="buttonsubmit" type="image" id="buttonsubmit" onMouseDown="buttonsubmit_onMouseDown()" onMouseUp="buttonsubmit_onMouseUp()"  onMouseOut="buttonsubmit_onMouseUp()" src="../img/ingresarbuttonsmall_normal.jpg" width="147" height="59">
+            </td>
+        </tr>
+        </table>
+	</td>
+  </tr>
+  <tr>
+    <td height="60" align="center">
+		<h2 id="error">&nbsp;</h2>
+    </td>
+  </tr>
+  <tr>
+    <td align="right" style="vertical-align:bottom" width="1024px">
+	<a href="login.html"><img src="../img/salirbuttonsmall_normal.jpg" width="145" height="59" border="0"></a>
+    </td>
+  </tr>
+</table>
+</div>
+</BODY>
+</HTML>

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="iso-8859-1">
+    <link href="kiosk.css" rel="stylesheet">
+    <script src="../scripts/screenutils.js"></script>
+    <script src="../scripts/kioware.js"></script>
+    <script src="../scripts/utilityfile.js"></script>
+    <script language="JavaScript">
+
+		window.onload = init;
+
+		var canClick = true;
+		var formSent = false;
+		var country;
+		function gotoDocument(href,document){
+			tmp = href;
+			tmp = tmp.substring(0,tmp.lastIndexOf('/')+1);
+			tmp = tmp+document;
+			return tmp;
+		}
+
+		function init(){
+
+				getUtility().boundLoginListener();
+
+				canClick = true;
+				formSent = false;
+
+				if (getUtility().isCardInserted()){
+					onCardInserted();
+				}
+
+				document.LoginForm.credential.value = "";
+		    //document.LoginForm.country.value = getCountry();
+				country = sessionStorage.getItem('KioskCountry');
+				document.LoginForm.country.value = country;
+				document.LoginForm.action = getUtility().getBaseUrl()+"quickLogin.do";
+				//var country= getCountry();
+				if (country.length>0){
+					var exchangeRateDiv= document.getElementById("exchangeRateDiv");
+					flashHTML="<object type='application/x-shockwave-flash' data='../flash/exchangeRateK.swf?UICountry="+country+"' width='520' height='50'>	<param name='movie' value='../flash/exchangeRateK.swf?UICountry="+country+"' /><param name='quality' value='high' /><param name='bgcolor' value='#c9c9c9'/></object>";
+					exchangeRateDiv.innerHTML= flashHTML;
+				}
+		}
+
+
+		function showCountry()
+		{
+			alert(document.LoginForm.country.value);
+		}
+
+		function destroy(){
+				canClick = false;
+		}
+
+		//function goToUserLogin(){
+		//	 if (canClick) {
+		//	 	canClick = false;
+		//	 	window.location.href =  gotoDocument(window.location.href,"userLogin.html");
+		//	 }
+		//}
+		//function goToProductLogin(){
+		//	 if (canClick) {
+		//	 	canClick = false;
+		//	 	window.location.href =  gotoDocument(window.location.href,"productLogin.html");
+		//	 }
+        //}
+
+		function onCardInserted(){
+
+			canClick = false;
+			showRemoveYourCard();
+		}
+
+		function resetScreen(){
+
+				showInsertYourCard();
+				document.all.label.innerHTML = 'Introduzca su tarjeta nuevamente';
+				canClick = true;
+		}
+
+
+		function toSingleNumber(str){
+			res = str;
+			if ((str.length == 2) && (str.charAt(0) == '0')){
+				res = str.charAt(1);
+			}
+			return res;
+		}
+
+
+		function expired(str){
+
+			result = false;
+
+			today = new Date();
+			mes = today.getMonth();
+			anno = today.getFullYear();
+
+			annoCard = str.substring(0,2);
+			mesCard = str.substring(2);
+
+			// Tarjetas con fechas de vencimiento superior a 2070 estan vencidas, ya que se
+			// asume que el vencimiento es 1970
+
+			if (parseInt(toSingleNumber(annoCard)) < 70){
+				annoCard = '20'+annoCard;
+			} else {
+				annoCard = '19'+annoCard;
+			}
+
+			if (parseInt(annoCard) < anno){
+				result = true;
+			} else {
+				if ((parseInt(annoCard) == anno) && parseInt(toSingleNumber(mesCard)) < parseInt(toSingleNumber(mes))){
+					result = true;
+				}
+			}
+			return result;
+
+		}
+
+
+		function validString(checkStr,ln){
+			result = true;
+			if (checkStr == null || trim(checkStr).length == 0 || checkStr.length > ln) {
+					result = false;
+			}
+			return result;
+		}
+
+
+
+	function onCardRemoved() {
+
+		card = getUtility().getReaderCard();
+		expdate = getUtility().getReaderExpDate();
+		name = getUtility().getReaderUserName();
+
+/*
+
+5303105315010868
+3770459032000507
+5303106215005826
+4509986922177793
+4509986922043748
+5303105315002584
+card='3770459032000507';
+expdate='0101';
+//alert(document.LoginForm.action);
+
+*/
+
+
+
+		if (validString(card,16)) {
+
+			if (validString(expdate,4)) {
+
+				if (expired(expdate)){
+
+					getUtility().showError("ExpiredCard","ExpiredCard");
+
+				} else {
+
+					if (!formSent) {
+
+						formSent = true;
+
+						getUtility().setCredential(card);
+						sessionStorage.setItem('name') = name;
+						sessionStorage.setItem('expdate') = expdate;
+						sessionStorage.setItem('card') = card;
+						sessionStorage.setItem('KioskId') = KioskId;
+						document.LoginForm.expirationDate.value = expdate;
+						document.LoginForm.credential.value = card;
+						document.LoginForm.name.value = name;
+						document.LoginForm.kioskId.value = KioskId;
+						//document.LoginForm.kioskId.value = getUtility().printer.getKioskId();
+
+						getUtility().unboundListener();
+
+						showPleaseWait();
+
+						setTimeout("document.LoginForm.submit()",10);
+
+					}
+
+				}
+
+			} else {
+				resetScreen();
+			}
+		} else {
+			resetScreen();
+		}
+
+	}
+
+	function ltrim ( s )
+	{
+		return s.replace( /^\s*/, "" )
+	}
+
+	function rtrim ( s )
+	{
+		return s.replace( /\s*$/, "" );
+	}
+
+	function trim ( s )
+	{
+		return rtrim(ltrim(s));
+	}
+
+	function showInsertYourCard(){
+			document.all.firstLayer.style.visibility = 'visible';
+			document.all.secondLayer.style.visibility = 'hidden';
+			document.all.thirdLayer.style.visibility = 'hidden';
+	}
+
+	function showRemoveYourCard(){
+			document.all.firstLayer.style.visibility = 'hidden';
+			document.all.secondLayer.style.visibility = 'visible';
+			document.all.thirdLayer.style.visibility = 'hidden';
+
+	}
+	function showPleaseWait(){
+			document.all.firstLayer.style.visibility = 'hidden';
+			document.all.secondLayer.style.visibility = 'hidden';
+			document.all.thirdLayer.style.visibility = 'visible';
+	}
+
+    </script>
+    <style type="text/css">
+        <!--
+        code {
+            font-family: "TheSans BAC", Verdana, sans-serif;
+            font-size: 48px;
+            font-weight: bold;
+            color: #990000;
+        }
+
+        .sizecero {
+            height: 0px;
+            width: 0px;
+        }
+        -->
+    </style>
+</head>
+<body bgcolor="#CCCCCC" class="body" onLoad="Initialize();init()" onUnload="destroy()">
+    <form name="LoginForm" action="" method="POST">
+        <input name="name" type="hidden" value="">
+        <input name="country" type="hidden" value="">
+        <input name="credential" type="hidden" value="">
+        <input name="kioskId" type="hidden" value="">
+        <input name="expirationDate" type="hidden" value="">
+    </form>
+    <div id="exchangeRateDiv" class="exchangeRateSection">
+    </div>
+    <div id="firstLayer" class="nlay3" style="text-align:center;" >
+        <table class="nlay10" style="width:360px">
+            <tr>
+                <td>
+                    <a href="https://content.baccredomatic.com/es/aplicaciones/kioscos/servicios.html">
+                        <img src="../img/SOLICITUDES_EN_LINEA.JPG" width="150" height="48" border="0" name="bt3" id="bt3">
+                    </a>
+                </td>
+                <td>
+                    <a href="ifsucursal.html">
+                        <img src="../img/BACONLINE_NORMAL.JPG" width="210" height="48">
+                    </a>
+                </td>
+            </tr>
+        </table>
+        <table  border="0" cellpadding="0" cellspacing="0" style="margin: 0 auto;">
+            <tr style="vertical-align:middle">
+                <td height="79" colspan="3" align="left"></td>
+            </tr>
+            <tr style="vertical-align:middle">
+                <td height="85" colspan="3" align="center">
+                    <code id="label">Introduzca su tarjeta</code>
+                </td>
+            </tr>
+            <tr style="vertical-align:top">
+                <td colspan="3">
+                    <code>
+                        <img src="../img/readerIn.gif" width="396" height="250" border="0">
+                    </code>
+                </td>
+            </tr>
+            <tr style="vertical-align:middle">
+                <td height="50" colspan="3" align="center">
+                    <p class="smf" id="txt1">o bien presione un bot&oacute;n para ingresar con su...</p>
+                </td>
+            </tr>
+            <tr>
+                <td height="120" style="vertical-align:bottom">
+                    <font color="#FBFBFB">............................</font>
+                    <a href="productLogin.html">
+                        <img src="../img/productLogin_normal.gif" name="button1" width="284" height="120" border="0" id="button1">
+                    </a>
+                </td>
+                <td height="120" style="vertical-align:middle">
+                    <p id="txt2" class="smf">&oacute;</p>
+                </td>
+                <td height="120" style="vertical-align:bottom">
+                    <a href="userLogin.html">
+                        <img src="../img/userLogin_normal.gif" name="button2" width="284" height="120" border="0" id="button2">
+                    </a>
+                    <font color="#FBFBFB">............................</font>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="secondLayer" class="nlay2" style="text-align:center;">
+        <table border="0" cellpadding="0" cellspacing="0">
+            <tr style="vertical-align:middle">
+                <td height="80" colspan="3" align="left">
+                    &nbsp;
+                </td>
+            </tr>
+            <tr style="vertical-align:middle">
+                <td height="90" colspan="3" align="center">
+                    <code>Retire su tarjeta</code>
+                </td>
+            </tr>
+            <tr  style="vertical-align:top">
+                <td height="10" colspan="3">
+                    &nbsp;
+                </td>
+            </tr>
+            <tr  style="vertical-align:top">
+                <td colspan="3">
+                    <code>
+                        <img src="../img/readerOut.gif" width="396" height="250" border="0">
+                    </code>
+                </td>
+            </tr>
+            <tr style="vertical-align:middle">
+                <td height="50" colspan="3" align="center">
+                    &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td height="120" align="center" valign="bottom">
+                    &nbsp;
+                </td>
+                <td height="120" align="center" valign="middle">
+                    &nbsp;
+                </td>
+                <td height="120" align="center" valign="bottom">
+                    &nbsp;
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="thirdLayer" class="nlay1" style="text-align:center;">
+        <table border="0" cellpadding="0" cellspacing="0">
+            <tr style="vertical-align:middle">
+                <td height="180" align="left"></td>
+            </tr>
+            <tr  style="vertical-align:top">
+                <td align="center" valign="middle" class="messageFontBlack">
+                    Favor Espere un Momento...
+                </td>
+            </tr>
+            <tr style="vertical-align:middle">
+                <td height="80" align="center">
+                    &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td height="120" align="center" valign="bottom">
+                    &nbsp;
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
